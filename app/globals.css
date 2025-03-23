@@ -163,7 +163,11 @@ textarea {
 }
 
 .preview-content {
-  white-space: pre-line;
+  white-space: pre-wrap;
+}
+
+.preview-content div {
+  margin-top: 10px;
 }
 
 .form-footer {
@@ -427,4 +431,84 @@ legend {
   padding: 15px;
   border-radius: 4px;
   margin-bottom: 15px;
+}
+
+/* CKEditor styles */
+.editor-container {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.editor-loading {
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  color: #666;
+  font-style: italic;
+}
+
+.ck-editor__editable {
+  min-height: 250px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.ck-toolbar {
+  border-bottom: 1px solid #ddd !important;
+}
+
+/* Dashboard link */
+.dashboard-link {
+  margin: 20px 0;
+  text-align: right;
+}
+
+.dashboard-link a {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f1f5f9;
+  color: #3182ce;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dashboard-link a:hover {
+  background-color: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+/* Tracking dashboard styles */
+.tracking-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.tracking-dashboard h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #1a202c;
+}
+
+.dashboard-info {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.dashboard-info h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #2d3748;
+}
+
+.dashboard-info ul {
+  margin-bottom: 0;
 }

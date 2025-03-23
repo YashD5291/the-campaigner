@@ -1,0 +1,46 @@
+.tiptap-editor-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.editor-menu {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.editor-menu button {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.editor-menu button.is-active {
+  border-color: #91d5ff;
+}
+
+.tiptap-editor-content {
+  padding: 15px;
+  min-height: 200px;
+}
+
+/* Style the actual content area */
+.tiptap-editor-content .ProseMirror {
+  outline: none;
+  min-height: 200px;
+}
+
+.tiptap-editor-content .ProseMirror p {
+  margin: 0 0 1em 0;
+}
+
+.tiptap-editor-content .ProseMirror ul,
+.tiptap-editor-content .ProseMirror ol {
+  padding-left: 2em;
+} 

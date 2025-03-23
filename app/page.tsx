@@ -24,6 +24,20 @@ export default function Home() {
   const [subject, setSubject] = useState('');
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
+  const [emailBody, setEmailBody] = useState(`Hello there, I'm Juan Flores, a results-driven Senior Full Stack Developer with over 8 years of experience building scalable solutions across insurance, e-commerce, and healthcare sectors.
+
+<p>At Hub International, I led initiatives that optimized React-based platforms, enhanced broker dashboard performance by 35%, and automated content workflows saving over 15 hours weekly. My expertise in JavaScript, TypeScript, Node.js, and AWS has enabled me to drive impactful technological transformations.</p>
+
+<p>Whether it's modernizing legacy systems, streamlining API integrations, or implementing CI/CD pipelines, I'm passionate about solving complex challenges. I believe my background would be a great fit for opportunities within your team.</p>
+
+<p>I'd be thrilled to connect and explore how I can contribute to your organization's success. Feel free to reach out at your convenience.</p>
+
+<p>Best regards,<br>
+Juan Flores<br>
+Senior Full Stack Developer<br>
+Email: juan.flores.engineer@gmail.com<br>
+GitHub: github.com/EASYMAK777<br>
+Portfolio: <a href="https://jflores.vercel.app/">https://jflores.vercel.app/</a></p>`);
   
   // CSV data handling
   const [csvData, setCsvData] = useState<CsvRow[]>([]);
@@ -94,7 +108,8 @@ export default function Home() {
         senderName,
         subject,
         resumeFile,
-        selectedContacts
+        selectedContacts,
+        emailBody
       });
       
       // Update UI with results
@@ -127,7 +142,14 @@ export default function Home() {
   };
   
   return (
-    <div className="container">
+    <main className="campaigner">
+      <h1>Email Campaigner</h1>
+      <p className="tagline">Create and send personalized email campaigns to multiple recipients</p>
+      
+      <div className="dashboard-link">
+        <a href="/tracking-dashboard">View Email Tracking Dashboard →</a>
+      </div>
+      
       {toastMessage && (
         <Toast 
           message={toastMessage} 
@@ -135,9 +157,6 @@ export default function Home() {
           onClose={hideToast} 
         />
       )}
-      
-      <h1>The Campaigner</h1>
-      <p className="tagline">Email Campaign Management for Recruiters</p>
       
       <form id="emailForm" onSubmit={handleSubmit}>
         {/* Sender Information Section */}
@@ -186,6 +205,8 @@ export default function Home() {
             setFileName={setFileName}
             selectedContacts={selectedContacts}
             senderName={senderName}
+            emailBody={emailBody}
+            setEmailBody={setEmailBody}
           />
         </fieldset>
 
@@ -204,6 +225,6 @@ export default function Home() {
       </form>
 
       <SentEmails sentEmails={sentEmails} showSentEmails={showSentEmails} />
-    </div>
+    </main>
   );
 }

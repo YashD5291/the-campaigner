@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Email Campaigner
 
-## Getting Started
+A Next.js application for sending personalized email campaigns with tracking capabilities.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Send personalized emails to multiple recipients
+- Upload and parse CSV files with contact information
+- Attach PDF files to emails
+- Rich text editor for composing emails
+- Email open tracking with pixel tracking
+- Real-time tracking dashboard
+- Responsive design
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Email Tracking
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application includes pixel tracking functionality to track when recipients open emails. This works by embedding a tiny, invisible image in each email that loads from your server when the email is opened. The tracking data is displayed in a dashboard accessible at `/tracking-dashboard`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Note on Email Tracking:**
+- Email tracking only works when the recipient's email client loads images
+- The recipient must be connected to the internet when opening the email
+- The email must be viewed in HTML format (not plain text)
+- Some email clients block tracking pixels by default
 
-## Learn More
+## Deployment on Vercel
 
-To learn more about Next.js, take a look at the following resources:
+This application is optimized for deployment on Vercel. Follow these steps to deploy:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Fork or clone this repository
+2. Create a Vercel account if you don't have one
+3. Import your repository to Vercel
+4. Set up the following environment variables in the Vercel dashboard:
+   - `NEXT_PUBLIC_BASE_URL`: The URL of your deployed application (e.g., https://your-app.vercel.app)
+   - `EMAIL_USER`: Your email address (for sending emails)
+   - `EMAIL_PASSWORD`: Your email app password (for Gmail, create an app password)
+   - `EMAIL_SENDER_NAME`: Your name as it should appear in the email
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The `VERCEL_URL` environment variable is automatically set by Vercel, which the application uses to construct the tracking pixel URL.
 
-## Deploy on Vercel
+## Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To run the application locally:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Create a `.env.local` file based on the provided `.env.local.example`
+4. Run the development server with `npm run dev`
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Technology Stack
+
+- Next.js 14+
+- TypeScript
+- React
+- Node.js
+- Nodemailer (for email sending)
+- Vercel (for deployment)
+
+## License
+
+MIT

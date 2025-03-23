@@ -7,6 +7,7 @@ export interface SendEmailParams {
   subject: string;
   resumeFile: File;
   selectedContacts: CsvRow[];
+  emailBody: string;
 }
 
 export interface SendEmailResult {
@@ -22,24 +23,9 @@ export const sendEmails = async ({
   senderName,
   subject,
   resumeFile,
-  selectedContacts
+  selectedContacts,
+  emailBody
 }: SendEmailParams): Promise<SendEmailResult[]> => {
-  // Create template email body
-  const templateBody = `Hello there, I'm Juan Flores, a results-driven Senior Full Stack Developer with over 8 years of experience building scalable solutions across insurance, e-commerce, and healthcare sectors.
-
-At Hub International, I led initiatives that optimized React-based platforms, enhanced broker dashboard performance by 35%, and automated content workflows saving over 15 hours weekly. My expertise in JavaScript, TypeScript, Node.js, and AWS has enabled me to drive impactful technological transformations.
-
-Whether it's modernizing legacy systems, streamlining API integrations, or implementing CI/CD pipelines, I'm passionate about solving complex challenges. I believe my background would be a great fit for opportunities within your team.
-
-I'd be thrilled to connect and explore how I can contribute to your organization's success. Feel free to reach out at your convenience.
-
-Best regards,
-Juan Flores
-Senior Full Stack Developer
-Email: juan.flores.engineer@gmail.com
-GitHub: github.com/EASYMAK777
-Portfolio: https://jflores.vercel.app/`;
-  
   // Send emails to all selected contacts
   const results = await Promise.all(
     selectedContacts.map(async (contact) => {
@@ -63,7 +49,7 @@ Portfolio: https://jflores.vercel.app/`;
         formData.append('toEmail', contact.email || '');
         formData.append('toName', recruiterName);
         formData.append('subject', subject);
-        formData.append('body', templateBody);
+        formData.append('body', emailBody);
         formData.append('resumeFile', resumeFile);
         
         const response = await fetch('/api/uploads', {

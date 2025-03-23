@@ -1,5 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import type { CsvRow } from './CsvUpload';
+import dynamic from 'next/dynamic';
+
+// Dynamic import for Tiptap editor to ensure client-side only rendering
+const TiptapEditor = dynamic(
+  () => import('./TiptapEditor'),
+  { ssr: false }
+);
 
 interface EmailComposerProps {
   subject: string;
@@ -10,6 +17,8 @@ interface EmailComposerProps {
   setFileName: (name: string) => void;
   selectedContacts: CsvRow[];
   senderName: string;
+  emailBody: string;
+  setEmailBody: (body: string) => void;
 }
 
 const EmailComposer: React.FC<EmailComposerProps> = ({
@@ -20,9 +29,18 @@ const EmailComposer: React.FC<EmailComposerProps> = ({
   fileName,
   setFileName,
   selectedContacts,
-  senderName
+  senderName,
+  emailBody,
+  setEmailBody
 }) => {
   const resumeFileInputRef = useRef<HTMLInputElement>(null);
+  const [editorMounted, setEditorMounted] = useState(false);
+
+  // Set editor as mounted after component mounts
+  useEffect(() => {
+    setEditorMounted(true);
+    return () => setEditorMounted(false);
+  }, []);
 
   // Handle resume file selection
   const handleResumeFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +52,10 @@ const EmailComposer: React.FC<EmailComposerProps> = ({
 
   // Create email preview
   const createEmailPreview = () => {
-    const recruiterName = selectedContacts.length > 0 
+    const recruiterName = selectedContacts.length > 0
       ? (selectedContacts[0].firstName || (selectedContacts[0].fullName ? selectedContacts[0].fullName.split(' ')[0] : 'Recruiter'))
       : '[Recruiter Name]';
-      
+
     // List email recipients
     let emailsText = '';
     if (selectedContacts.length > 0) {
@@ -49,24 +67,8 @@ const EmailComposer: React.FC<EmailComposerProps> = ({
     } else {
       emailsText = 'No recipients selected\n\n';
     }
-    
-    // Default email body template
-    const emailBody = `Hello there, I'm Juan Flores, a results-driven Senior Full Stack Developer with over 8 years of experience building scalable solutions across insurance, e-commerce, and healthcare sectors.
 
-At Hub International, I led initiatives that optimized React-based platforms, enhanced broker dashboard performance by 35%, and automated content workflows saving over 15 hours weekly. My expertise in JavaScript, TypeScript, Node.js, and AWS has enabled me to drive impactful technological transformations.
-
-Whether it's modernizing legacy systems, streamlining API integrations, or implementing CI/CD pipelines, I'm passionate about solving complex challenges. I believe my background would be a great fit for opportunities within your team.
-
-I'd be thrilled to connect and explore how I can contribute to your organization's success. Feel free to reach out at your convenience.
-
-Best regards,
-Juan Flores
-Senior Full Stack Developer
-Email: juan.flores.engineer@gmail.com
-GitHub: github.com/EASYMAK777
-Portfolio: https://jflores.vercel.app/`;
-    
-    return `From: ${senderName}\nSubject: ${subject || '[Subject]'}\n\n${emailsText}${emailBody}`;
+    return `From: ${senderName}\nSubject: ${subject || '[Subject]'}\n\n${emailsText}`;
   };
 
   return (
@@ -76,7 +78,7 @@ Portfolio: https://jflores.vercel.app/`;
           <h3>Campaign Recipients <span id="contactCount" className="badge">{selectedContacts.length}</span></h3>
         </div>
       )}
-      
+
       <div className="form-group">
         <label htmlFor="subject">Campaign Subject Line:</label>
         <input
@@ -104,14 +106,14 @@ Portfolio: https://jflores.vercel.app/`;
         </div>
         <div className="info-text">Attach your resume or portfolio to be included in every campaign email</div>
       </div>
-      
-      <div className="email-preview">
-        <h3>Campaign Preview</h3>
-        <div
-          id="preview"
-          className="preview-content"
-        >
-          {createEmailPreview()}
+
+      <div className="form-group">
+        <label htmlFor="emailBody">Email Body:</label>
+        <div className="editor-container">
+          <TiptapEditor
+            value={emailBody}
+            onChange={setEmailBody}
+          />
         </div>
       </div>
     </>
