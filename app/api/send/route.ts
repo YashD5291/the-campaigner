@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Get other form fields
-    const fromEmail = process.env.EMAIL_USER || "chintanthakkar.work@gmail.com";
-    const fromPassword = process.env.EMAIL_PASSWORD || "flen fetj ofsf txph";
-    const fromName = process.env.EMAIL_SENDER_NAME || "Juan Flores";
+    const fromEmail = "juan.flores.engineer@gmail.com";
+    const fromPassword = "mmwf eaxn egpb yerb";
+    const fromName = "Juan Flores";
     const toEmail = formData.get("toEmail") as string;
     const toName = (formData.get("toName") as string) || "";
     const subject = formData.get("subject") as string;

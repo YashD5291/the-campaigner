@@ -52,7 +52,7 @@ export const sendEmails = async ({
         formData.append('body', emailBody);
         formData.append('resumeFile', resumeFile);
         
-        const response = await fetch('/api/uploads', {
+        const response = await fetch('/api/send', {
           method: 'POST',
           body: formData,
         });
