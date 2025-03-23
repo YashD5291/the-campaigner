@@ -87,6 +87,7 @@ label {
 
 input{
   background-color: var(--light-bg);
+  color: var(--text-color);
 }
 
 input[type='text'],
