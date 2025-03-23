@@ -7,7 +7,7 @@ interface ContactListProps {
   filteredData: CsvRow[];
   setFilteredData: (data: CsvRow[]) => void;
   selectedContacts: CsvRow[];
-  setSelectedContacts: (contacts: CsvRow[]) => void;
+  setSelectedContacts: React.Dispatch<React.SetStateAction<CsvRow[]>>;
 }
 
 const ContactList: React.FC<ContactListProps> = ({
@@ -62,9 +62,9 @@ const ContactList: React.FC<ContactListProps> = ({
   // Toggle individual contact selection
   const toggleContactSelection = (contact: CsvRow, isChecked: boolean) => {
     if (isChecked) {
-      setSelectedContacts(prev => [...prev, contact]);
+      setSelectedContacts((prev: CsvRow[]) => [...prev, contact]);
     } else {
-      setSelectedContacts(prev => prev.filter(c => c.email !== contact.email));
+      setSelectedContacts((prev: CsvRow[]) => prev.filter(c => c.email !== contact.email));
     }
   };
   
