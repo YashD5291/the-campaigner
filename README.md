@@ -1,6 +1,6 @@
 # Email Campaigner
 
-A Next.js application for sending personalized email campaigns with tracking capabilities.
+A Next.js application for sending personalized email campaigns.
 
 ## Features
 
@@ -8,19 +8,7 @@ A Next.js application for sending personalized email campaigns with tracking cap
 - Upload and parse CSV files with contact information
 - Attach PDF files to emails
 - Rich text editor for composing emails
-- Email open tracking with pixel tracking
-- Real-time tracking dashboard
 - Responsive design
-
-## Email Tracking
-
-The application includes pixel tracking functionality to track when recipients open emails. This works by embedding a tiny, invisible image in each email that loads from your server when the email is opened. The tracking data is displayed in a dashboard accessible at `/tracking-dashboard`.
-
-**Note on Email Tracking:**
-- Email tracking only works when the recipient's email client loads images
-- The recipient must be connected to the internet when opening the email
-- The email must be viewed in HTML format (not plain text)
-- Some email clients block tracking pixels by default
 
 ## Deployment on Vercel
 
@@ -34,8 +22,6 @@ This application is optimized for deployment on Vercel. Follow these steps to de
    - `EMAIL_USER`: Your email address (for sending emails)
    - `EMAIL_PASSWORD`: Your email app password (for Gmail, create an app password)
    - `EMAIL_SENDER_NAME`: Your name as it should appear in the email
-
-The `VERCEL_URL` environment variable is automatically set by Vercel, which the application uses to construct the tracking pixel URL.
 
 ## Development
 

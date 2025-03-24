@@ -55,16 +55,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Generate a unique tracking ID for this email
-    const trackingId = uuidv4();
-    
-    // Create the tracking pixel URL
-    // Use absolute URL with the correct protocol (http/https)
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const trackingPixelUrl = `${baseUrl}/api/pixel-tracking?id=${trackingId}`;
-
     // Personalize greeting if toName is provided
     let personalizedBody = body;
     if (toName) {
@@ -81,18 +71,6 @@ export async function POST(request: NextRequest) {
     // Check if the body contains HTML
     let isHtml = body.includes('<');
 
-    // Add tracking pixel to HTML emails
-    if (isHtml) {
-      // Add the tracking pixel at the end of the email body
-      personalizedBody = `${personalizedBody}<img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:none;" />`;
-    } else {
-      // For plain text emails, we can't add a tracking pixel directly
-      // Convert to HTML if it's not already HTML
-      personalizedBody = `<div>${personalizedBody.replace(/\n/g, '<br/>')}</div><img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:none;" />`;
-      // Force HTML mode
-      isHtml = true;
-    }
-
     // Set up email data with file attachment
     const mailOptions = {
       from: `${fromName} <${fromEmail}>`,
@@ -107,25 +85,10 @@ export async function POST(request: NextRequest) {
           path: filePath,
         },
       ],
-      headers: {
-        'X-Tracking-ID': trackingId, // Add tracking ID to email headers
-      },
     };
 
     // Send the email
     const info = await transporter.sendMail(mailOptions);
-
-    // Store initial tracking information
-    // In a real application, you'd store this in a database
-    // This is simplified for demonstration purposes
-    const trackingData = {
-      emailId: trackingId,
-      recipientEmail: toEmail,
-      recipientName: toName,
-      subject,
-      sentAt: new Date(),
-      status: 'sent',
-    };
 
     // Clean up: remove the temporary file
     try {
@@ -137,9 +100,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `Email sent successfully to ${toEmail}`,
-      tracking: {
-        emailId: trackingId,
-      },
       info,
     });
   } catch (error) {
